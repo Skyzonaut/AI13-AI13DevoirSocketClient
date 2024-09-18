@@ -1,6 +1,7 @@
 package SocketClient;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.*;
@@ -20,7 +21,26 @@ public class Main {
         try
         {
             // Instantiating the connection to the server with a socket
-            Socket socket = new Socket("localhost", 10810);
+            Socket socket;
+            
+            try {
+                // If a port is given
+                if(args.length == 1) {
+                    socket = new Socket("localhost", Integer.parseInt(args[0]));
+                    System.out.println("Socket created on port " + args[0]);
+                }
+                // Else default port 10810
+                else {
+                    socket = new Socket("localhost", 10810);
+                    System.out.println("Socket created on port 10810");
+
+                }
+            }
+            // If the port cannot be parsed, be create on default port 10810
+            catch (NumberFormatException e) {
+                System.out.println("Port incompréhensible, création du socket sur le port 10810");
+                socket = new Socket("localhost", 10810);
+            }
 
             // Set the IO Stream
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -39,8 +59,8 @@ public class Main {
             ServerListenerThread userServerListener = new ServerListenerThread(socket, in);
             userServerListener.start();
         }
-        catch(Exception e) {
+        catch(IOException e) {
             System.out.println(e.getMessage());
-        }
+        } 
     }
 }
