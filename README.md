@@ -1,44 +1,45 @@
-### Java Socket messenger client application
+### Application de messagerie client Java Socket
 
-This application is the server side of a wider messaging application made of two executable jar and associated packages
-- ServerSide
-- ClientSide
+Cette application est la partie client d'une application de messagerie plus large composée de deux fichiers JAR exécutables et de packages associés :
+- Côté Serveur
+- Côté Client
 
-The current application will create a Socket connection to the `adress:port` of the server.
+L'application actuelle créera une connexion Socket à l'`adresse:port` du serveur.
 
-The client if connected, will have to choose a pseudo that is not yet taken. If the pseudo is accepted, then only the client can start sending messages.
+Une fois connecté, le client devra choisir un pseudo qui n'est pas encore pris. Si le pseudo est accepté, le client peut alors commencer à envoyer des messages.
 
-Every client connected to the same server will have access to the upcoming messages and will see the pseudo clearly.
+Chaque client connecté au même serveur aura accès aux messages à venir et verra clairement le pseudo des autres.
 
-The messages are broadcasted to all clients.
+Les messages sont diffusés à tous les clients.
 
-To stop the application, simply enter the command :
+Pour arrêter l'application, il suffit d'entrer la commande :
+`exit` sur la sortie standard.
 
-`exit` on the stdout.
+> Attention à ne pas envoyer "exit" EN TANT QUE MESSAGE. Sinon, le serveur le considérera comme une demande de déconnexion.
 
-> Be carefull of not sending AS A MESSAGE the word exit. Or else the server will take it as a disconnection request
+### Lancement
 
-### Launch
-To launch the server, simply go to the main directory.
-Then execute this command :
+Pour lancer le client, allez simplement dans le répertoire principal.
+Puis exécutez cette commande :
 
-````bash
+```bash
 java -jar DevoirSocketClient.jar
-````
+```
 
-The client will be connected on the default `localhost` on the 
-`10810` port. 
-> If the server is connected on the default port, then the client shall be launched as such
+Le client se connectera par défaut à `localhost` sur le port `10810`.
 
-However, it is possible to select the port we want to launch the client on. But the server MUST be launched on the same port.
+> Si le serveur est connecté sur le port par défaut, alors le client doit être lancé ainsi.
 
-To do this, simply add it as a parameter to the launch command
+Cependant, il est possible de sélectionner le port sur lequel nous voulons lancer le client. Mais le serveur DOIT être lancé sur le même port.
 
-````bash
+Pour ce faire, ajoutez simplement le port en paramètre à la commande de lancement :
+
+```bash
 java -jar DevoirSocketClient.jar <port>
-````
+```
 
 ### Exceptions
-If the server carshed, the connection error will be catch and a message will be displayed to all connected clients.
 
-If a client disconnect improperly (Ctrl-C / Ctrl-Q), the disconnection will be catch by the server and be displayed, on top of displaying the disconnection to others
+Si le serveur plante, l'erreur de connexion sera capturée et un message sera affiché à tous les clients connectés.
+
+Si un client se déconnecte de manière inappropriée (Ctrl-C / Ctrl-Q), la déconnexion sera capturée par le serveur et affichée, en plus d'être notifiée aux autres clients.
